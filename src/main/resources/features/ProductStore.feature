@@ -11,3 +11,4 @@ Feature: Product - Store
     When finalizo la compra
     Then valido el titulo de la pagina del carrito
     And vuelvo a validar el calculo de precios en el carrito
+    Then genero el reporte en PDF

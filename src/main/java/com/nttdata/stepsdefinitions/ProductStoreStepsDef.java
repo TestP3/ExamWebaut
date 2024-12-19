@@ -3,11 +3,13 @@ package com.nttdata.stepsdefinitions;
 import com.nttdata.steps.LoginSteps;
 import com.nttdata.steps.CategorySteps;
 import com.nttdata.steps.CartSteps;
+import com.nttdata.util.PDFReport;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.And;
 import org.openqa.selenium.WebDriver;
+import static com.nttdata.core.DriverManager.getDriver;
 
 import static com.nttdata.core.DriverManager.getDriver;
 
@@ -16,6 +18,7 @@ public class ProductStoreStepsDef {
     private LoginSteps loginSteps = new LoginSteps(driver);
     private CategorySteps categorySteps = new CategorySteps(driver);
     private CartSteps cartSteps = new CartSteps(driver);
+    private StringBuilder reportContent = new StringBuilder();
 
     @Given("estoy en la página de la tienda")
     public void estoy_en_la_pagina_de_la_tienda() {
@@ -59,5 +62,12 @@ public class ProductStoreStepsDef {
     @Then("vuelvo a validar el calculo de precios en el carrito")
     public void vuelvo_a_validar_el_calculo_de_precios_en_el_carrito() {
         cartSteps.validateCartPrices();
+    }
+
+    @Then("genero el reporte en PDF")
+    public void genero_el_reporte_en_pdf() {
+        String filePath = "target/reports/test-report.pdf";
+        PDFReport.generateReport(filePath, reportContent.toString());
+        System.out.println("Reporte en PDF generado: " + filePath);
     }
 }
